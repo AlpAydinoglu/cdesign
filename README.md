@@ -11,9 +11,9 @@ Optimization problems are formulated using https://yalmip.github.io/ (YALMIP).
 `pathlcp`, `PenBMI`, `pathlcp` will need to be in the MATLAB path for the examples to run.
 
 ## Functionality
-The library can be used to design contact-aware controllers for linear complementarity systems (requires YALMIP and PenBMI).
+The library can be used to design contact-aware controllers for linear complementarity systems (requires YALMIP and PenBMI). The code can be used to design controllers for any linear complementarity system models as long as the P-matrix assumption holds. It is important to note that the set related to `\bar{\lambda}`
 
-The designed controller can be tested on the linear complementarity system (recommended as a sanity check). The code can be used to evaluate the dynamics of any linear complementarity model as long as the P-matrix assumption hold (requires PATH).
+The designed controller can be tested on the linear complementarity system (recommended as a sanity check). The code can be used to evaluate the dynamics of any linear complementarity model as long as the P-matrix assumption holds (requires PATH).
 
 The designed controller can be tested on the nonlinear complementarity system model (requires PATH).
 
