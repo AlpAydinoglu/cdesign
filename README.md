@@ -9,3 +9,6 @@ The bilinear matrix inequalities are solved using http://www.penopt.com/penbmi.h
 Optimization problem is formulated using  https://yalmip.github.io/ (YALMIP).
 
 `pathlcp`, `PenBMI`, `pathlcp` will need to be in the MATLAB path for the examples to run correctly.
+
+## Functionality
+The library can be used to design controllers for systems of the form \xdot
