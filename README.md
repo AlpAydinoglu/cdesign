@@ -1,6 +1,8 @@
 # Contact-Aware-Controller-Design-for-Complementarity-Systems
 ICRA2020
+
 Version on arXiv: https://arxiv.org/abs/1909.11221
+
 Video: 
 
 ## Dependencies
