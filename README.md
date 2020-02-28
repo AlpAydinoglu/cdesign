@@ -8,7 +8,7 @@ The bilinear matrix inequalities are solved using http://www.penopt.com/penbmi.h
 
 Optimization problems are formulated using https://yalmip.github.io/ (YALMIP).
 
-`pathlcp`, `PenBMI`, `pathlcp` will need to be in the MATLAB path for the examples to run.
+`pathlcp`, `PenBMI`, `yalmip` will need to be in the MATLAB path for the examples to run.
 
 ## Functionality
 The library can be used to design contact-aware controllers for linear complementarity systems (requires YALMIP and PenBMI). The code can be used to design controllers for any linear complementarity system models as long as the P-matrix assumption holds. It is important to note that the set related to `\bar{\lambda}` needs to be generated specifically wrt the system at hand. Make sure the S-procedure terms related to that set is correct for your model before running the code to design a controller.
