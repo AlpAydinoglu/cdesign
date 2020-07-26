@@ -23,7 +23,7 @@ The library can be used to design contact-aware controllers for linear complemen
 
 The designed controller can be tested on the linear complementarity system (recommended as a sanity check). The code can be used to evaluate the dynamics of any linear complementarity model as long as the x-trajectory is unique (requires PATH).
 
-After finding a W, you can just plug in your system parameters using the code provided in `design_algorithm` and design a controller. In genereal, it is recommended to verify the controller solving an SDP (after fixing the gain matrices). The details can be found in the code.
+After finding a W, you can just plug in your system parameters using the code provided in `design_algorithm` and design a controller. In general, it is recommended to verify the controller solving an SDP (after fixing the gain matrices). The details can be found in the code.
 
 ## Examples
 `acrobot`: Controller design and its implementation on an acrobot with soft joint limits
