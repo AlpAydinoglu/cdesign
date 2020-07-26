@@ -1,0 +1,2 @@
+-euler_disc_acrobot.m is used to generate a trajectory for constructing a video
+-acrobot_video.m creates a video

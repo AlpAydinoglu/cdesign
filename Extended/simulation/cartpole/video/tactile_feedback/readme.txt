@@ -1,0 +1,2 @@
+-eule_discretization_cartpole.m is used to generate the trajectory
+-cartpole_video.m generates the video

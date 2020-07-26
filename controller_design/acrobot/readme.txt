@@ -1,3 +1,0 @@
--Acrobot.m is used to find a controller
--run_system_affine_linear.m is used to check the controller on the LCS model
--sys_affine is a function that is used when evaluating the dynamics of the system

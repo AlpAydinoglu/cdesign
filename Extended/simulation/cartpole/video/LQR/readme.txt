@@ -1,0 +1,2 @@
+-euler_discretization_cartpole_lqr.m is used to create the trajectory
+-cartpole_video_lqr.m is used to generate the video
