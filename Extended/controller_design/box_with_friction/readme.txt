@@ -1,0 +1,2 @@
+-box_with_friction.m is used to generate the controller
+-sys_affine.m is used to check the controller on the LCS

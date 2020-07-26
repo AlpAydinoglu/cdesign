@@ -2,42 +2,31 @@ clear all
 clc
 close all
 
-%addpath to use PenBMI
-addpath(genpath('C:\Users\alp1a\OneDrive\Masaüstü\research\YALMIP-master\YALMIP-master'))
-addpath 'C:\Users\alp1a\Dropbox\research\PenBMI\PENBMI2.1-LIMITED\matlab'
-addpath 'C:\Program Files\Mosek\9.2\toolbox\R2015a'
-
-% run = 0;
-% 
-% while( run <= 100)
-%  
-%  clear all
-%  clc
-%  run = 0;
+%addpath to use PenBMI, YALMIP, MOSEK
 
 %optimization parameters
-eps = 10^-2;
+eps = 10^-3;
 num_iter = 100;
 
 %parameters
-m=0.1; %\mu * m
+m=0.1;
 g=9.81;
+alpha = 0.01;
 
 %problem data
 %state matrix, input matrix, contact matrix
-A = [0];
-B = [1]/4; %input matrix
-D = [0 1 -1]/4; %contact matrix
+A = zeros(3);
+B = [0 0; 1 0; 0 1]; %input matrix
+D = [1 -1 0 1 -1; 0 0 0 0 0; 0 0 0 0 0]; %contact matrix
 %complementarity constraints
-Ec = [0;0;0];
-Fc = [0 -1 -1; 1 1 -1; 1 -1 1];
-H = [0;1;-1]; 
-c = [m*g; 0; 0];
+Ec = [1 -1 0; -1 0 1; 0 0 0; 0 0 0; 0 0 0];
+Fc = [alpha 0 0 0 0; 0 alpha 0 0 0; 0 0 0 -1 -1; 1 -1 1 1 -1; -1 1 1 -1 1];
+H = zeros(5,2); 
+c = [0;0;m*g; 0; 0];
 kappa = 100;
-%conv_set = 1;
 
 %W SOL(q,F) is a singleton
-W = [0 1 -1];
+W = [1 0 0 0 0; 0 1 0 0 0; 0 0 0 1 -1];
 p = size(W, 1);
 
 %extract dimension information
@@ -55,7 +44,6 @@ for i = 1:m
     lam{i} = sdpvar(1,1); %lambda (contact force)
     rho{i} = sdpvar(1,1); %rho (slack variable)
     lamd{i} = sdpvar(1,1); %\bar{\lambda} (directional der. of contact for.)
-    tau{i} = sdpvar(1,1); %the low-pass filter dynamics
     mu{i} = sdpvar(1,1);
 end
 
@@ -78,6 +66,7 @@ for i = 1:m
     mu_basis = [mu_basis; mu{i}];
 end
 for i = 1:k
+   tau{i} = sdpvar(1,1); %the low-pass filter dynamics
    tau_basis = [tau_basis; tau{i}]; 
 end
 %general basis vector
@@ -88,13 +77,10 @@ sbasis = length(basis);
 %Controllers
 K = sdpvar(k,n,'full'); 
 L = sdpvar(k,m,'full'); 
-%K = -5;
-%L = [0 -0.9 0.9];
-%L = [0 0 0];
-%K = -57.4319;
-%L = [0.0000    0.7049   -0.7049];
-% K = -77.8614;
-%L = [0    0.7003   -0.7003];
+
+%TEST(LMI)
+% K = [-0.0000   -2.3315   -0.8207; -0.0000   -0.8901   -2.4360];
+% L = [-0.2592    0.0563   -0.0000    0.0000    0.0000; -0.0639    0.2711   -0.0000   -0.0000   -0.0000];
 
 %Lyap Function
 %Define the variables
@@ -105,7 +91,6 @@ p1 = sdpvar(1,n); p2 = sdpvar(1,m); p3 = sdpvar(1,k);
 V = x_basis' * P1 * x_basis + 2 * x_basis' * P2 * W * lam_basis ...
     + lam_basis' * W' * P3 * W * lam_basis + 2 * x_basis' * P4 * tau_basis ...
     + 2 * lam_basis' * W' * P5 * tau_basis + tau_basis' * P6 * tau_basis;
-    %+ p1 * x_basis + p2 * lam_basis + p3 * tau_basis;
 %Define the derivative vectors
 xdot = A*x_basis + B*tau_basis + D*lam_basis;
 taudot = kappa*eye(k)*K*x_basis + kappa*eye(k)*L*lam_basis - kappa*eye(k)*tau_basis;
@@ -115,10 +100,9 @@ Vdot = 2 * x_basis' * P1 * xdot + 2* x_basis' * P2 * W * lamd_basis ...
     + 2 * x_basis' * P4 * taudot + 2 * tau_basis' * P4' * xdot ...
     + 2 * lam_basis' * W' * P5 * taudot + 2 * tau_basis' * P5' * W * lamd_basis ...
     + 2 * tau_basis' * P6 * taudot;
-    %+ p1 * xdot + p2 * lamd_basis + p3 * taudot;
 
 %initalize the constraint set
-F = [L(1) == 0];
+F = [L(:,3) == 0, L(:,4) == 0, L(:,5) == 0, K(:,1) == 0];
 
 %S-procedure terms
 %(Ex + F \lam + c + H \tau) >= 0
@@ -194,16 +178,16 @@ end
 for i = 1:m
     EQ6{i} = rho_basis(i)*mu_basis(i); EQ6_MD{i} = sdpvar(1,1);
 end
-
-% x^2 >= val
+% x^2 >= val (0.1 to 0.7)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-INEQ_S = (x_basis' * x_basis) - 0.01; INEQ_S1 = sdpvar(1,1); INEQ_S2 = sdpvar(1,1);
+INEQ_S = (x_basis' * x_basis) - 0.1; INEQ_S1 = sdpvar(1,1); INEQ_S2 = sdpvar(1,1);
 F = [F , INEQ_S1 >= 0, INEQ_S2 >= 0];
 
 %inequalities
-ineq1 = V - eps * (x_basis' * x_basis) - eps * (tau_basis' * tau_basis);
-    %- eps * (lam_basis' * (W' * W) * lam_basis); %- INEQ_S * INEQ_S1;
-ineq2 = - Vdot; %- (eps) * (x_basis' * x_basis) - INEQ_S * INEQ_S2;
+ineq1 = V - eps * (x_basis' * x_basis) - eps * (tau_basis' * tau_basis)...
+    - INEQ_S * INEQ_S1 - eps * (lam_basis' * (W' * W) * lam_basis);
+ineq2 = - Vdot - (eps) * (x_basis' * x_basis) - INEQ_S * INEQ_S2;
+
 %add S-procedure terms
 for i = 1:m
     ineq1 = ineq1 - INEQ1{i}*INEQ1_M{i} - INEQ2{i}*INEQ2_M{i}  - EQ1{i}*EQ1_M{i};
@@ -217,8 +201,6 @@ for i = 1:(m*m)
     ineq2 = ineq2 - INEQ4{i}*INEQ4_M2{i} - INEQ6{i}*INEQ6_M2{i};
 end
 
-%F = [F, EQ4_MD{2} >= 0.1];
-
 %Construct the sos program
 v = monolist([x_basis' lam_basis' tau_basis'],1);
 Ke = sdpvar(length(v));
@@ -230,28 +212,13 @@ He = sdpvar(length(h));
 q_sos = h'*He*h;
 F = [F, coefficients(ineq2-q_sos,[x_basis' lam_basis' lamd_basis' rho_basis' tau_basis' mu_basis']) == 0, He>=0];
 
-% bound_k = 300;
-% F = [F, [bound_k*eye(k) K; (K)' bound_k*eye(n)] >= 0];
-bound_l = 1;
-F = [F, [bound_l*eye(k) L; (L)' bound_l*eye(m)] >= 0];
-%CALISAN BU
-KKK = -140; 
-assign(K,KKK); %assign(L,LLL);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%KKK = -100*rand(1);  LLL = 5*randn(1,3); LLL(1) = 0; 
-
 %solve BMI
 options=sdpsettings('solver', 'penbmi', 'penbmi.PBM_MAX_ITER', num_iter,'usex0',1,'savesolveroutput',1);
 out_solver = optimize(F,[],options);
-% feas = max ( out_solver.solveroutput.feas(3), out_solver.solveroutput.feas(2) );
-% if feas <= 10^-6
-%      break 
-% end
-% end
 
-%options = sdpsettings('solver','mosek');
-%optimize(F, [], options);
+%solve LMI
+% options = sdpsettings('solver','mosek');
+% optimize(F, [], options);
 
 % display the resulting matrices
 LL=double(L);

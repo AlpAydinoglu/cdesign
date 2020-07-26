@@ -3,7 +3,6 @@ clc
 close all
 
 %addpath to use PenBMI
-addpath 'C:\Users\Alp\Desktop\PenBMI\PENBMI2.1-LIMITED\matlab'
 
 counter = 0;
 while(counter<1)

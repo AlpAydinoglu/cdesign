@@ -3,7 +3,7 @@ clc
 close all
 
 load('controller.mat')
-addpath 'C:\Users\Alp\Desktop\linear complementarity systems\codes\path'
+%addpath pathlcp
 
 %extract dimension information
 n = size(A,2); %dimension of state space

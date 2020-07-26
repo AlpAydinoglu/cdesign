@@ -3,7 +3,7 @@ clc
 close all
 
 load('controller.mat')
-addpath 'C:\Users\alp1a\pathlcp\pathmexw64'
+%addpath pathlcp
 
 %extract dimension information
 n = size(A,2); %dimension of state space
