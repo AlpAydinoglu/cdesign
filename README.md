@@ -18,6 +18,24 @@ arXiv link: Fill
 
 Video: Fill
 
+## Functionality
+The library can be used to design contact-aware controllers for linear complementarity systems (requires YALMIP and PenBMI). The code can be used to design controllers for any linear complementarity system model and does not require the P-matrix assumption. If F is a P-matrix, pick W=I and design the controller. For the cases where the P-matrix assumption does not hold, we provide an algorithm to find the matrix W and use it in the controller design. If the algorithm fails, pick W=0 and do the controller design.
+
+The designed controller can be tested on the linear complementarity system (recommended as a sanity check). The code can be used to evaluate the dynamics of any linear complementarity model as long as the x-trajectory is unique (requires PATH).
+
+## Examples
+`acrobot`: Controller design and its implementation on an acrobot with soft joint limits
+
+`cartpole`: Controller design and its implementation on a cartpole with soft walls
+
+`partial_feedback`: Controller design and its implementation on a model with a cartpole and two carts, where the cart in the middle is not observed
+
+`box_with_friction`: Controller design and its implementation on a quasi-static model of a box standing on a surface with Coulomb friction
+
+`2D_simple_manipulation`: Controller design and its implementation on a quasi-static model of a box standing on a surface with Coulomb friction manipulated by two robotic arms
+
+`high_dimensional`: Controller design and its implementation on a high dimensional example with 8 states and 10 contacts (four carts example)
+
 # ICRA2020 Conference Paper
 # Contact-Aware-Controller-Design-for-Complementarity-Systems
 Presented in ICRA2020
