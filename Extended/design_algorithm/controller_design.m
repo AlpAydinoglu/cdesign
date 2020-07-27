@@ -108,23 +108,19 @@ for i = 1:m
 end
 %(\lam)^2 >= 0
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-for i = 1:m
-    for j = 1:m
-        ind = j+(i-1)*m;
-        INEQ4{ind} = lam_basis(i)*lam_basis(j); INEQ4_M{ind} = sdpvar(1,1); F = [F, INEQ4_M{ind} >= 0];
-        INEQ4_M2{ind} = sdpvar(1,1); F = [F, INEQ4_M2{ind} >= 0];
-    end
-end 
+enum = 1:m;
+cmb = combnk(enum, 2);
+for i = 1:length(cmb)
+        INEQ4{i} = lam_basis( cmb(i,1) )*lam_basis( cmb(i,2)  ); INEQ4_M{i} = sdpvar(1,1); F = [F, INEQ4_M{i} >= 0];
+        INEQ4_M2{i} = sdpvar(1,1); F = [F, INEQ4_M2{i} >= 0];
+end
 
 %(Ex + F \lam + c)^2 >= 0
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-for i = 1:m
-    for j = 1:m
-        ind = j+(i-1)*m;
-        INEQ6{ind} = (Ec(i,:)*x_basis + Fc(i,:)*lam_basis + c(i))*(Ec(j,:)*x_basis + Fc(j,:)*lam_basis + c(j)); 
-        INEQ6_M{ind} = sdpvar(1,1); F = [F, INEQ6_M{ind} >= 0]; 
-        INEQ6_M2{ind} = sdpvar(1,1); F = [F, INEQ6_M2{ind} >= 0];
-    end
+for i = 1:length(cmb)
+        INEQ6{i} = (Ec(cmb(i,1),:)*x_basis + Fc(cmb(i,1),:)*lam_basis + c(cmb(i,1)) )*(Ec(cmb(i,2) ,:)*x_basis + Fc(cmb(i,2) ,:)*lam_basis + c(cmb(i,2) ) ); 
+        INEQ6_M{i} = sdpvar(1,1); F = [F, INEQ6_M{i} >= 0]; 
+        INEQ6_M2{i} = sdpvar(1,1); F = [F, INEQ6_M2{i} >= 0];
 end
 
 %\lam^T (Ex + F\lam + c) = 0
@@ -178,7 +174,7 @@ for i = 1:m
         - EQ4{i}*EQ4_MD{i} - EQ5{i}*EQ5_MD{i} - EQ6{i}*EQ6_MD{i};
 end
 
-for i = 1:(m*m)
+for i = 1:length(cmb)
     ineq1 = ineq1 - INEQ4{i}*INEQ4_M{i} - INEQ6{i}*INEQ6_M{i};
     ineq2 = ineq2 - INEQ4{i}*INEQ4_M2{i} - INEQ6{i}*INEQ6_M2{i};
 end
