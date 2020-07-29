@@ -1,4 +1,4 @@
-Here, you can find the code for the conference paper 'Contact-Aware Controller design for Coplementarity Systems' that was presented in ICRA2020 and also the code for the extended version of the paper that was recently submitted to T-R0.
+Here, you can find the code for the conference paper 'Contact-Aware Controller design for Coplementarity Systems' that was presented in ICRA2020 and also the code for the extended version of the paper that was recently submitted to T-RO.
 
 # Dependencies
 
@@ -33,6 +33,8 @@ After finding a W, you can just plug in your system parameters using the code pr
 `partial_feedback`: Controller design and its implementation on a model with a cartpole and two carts, where the cart in the middle is not observed
 
 `box_with_friction`: Controller design and its implementation on a quasi-static model of a box standing on a surface with Coulomb friction
+
+`3_legged_table`: Controller design and its implementation on a quasi-static model of a 3-legged table standing on a surface with Coulomb friction
 
 `2D_simple_manipulation`: Controller design and its implementation on a quasi-static model of a box standing on a surface with Coulomb friction manipulated by two robotic arms
 
