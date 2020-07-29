@@ -34,6 +34,8 @@ After finding a W, you can just plug in your system parameters using the code pr
 
 `box_with_friction`: Controller design and its implementation on a quasi-static model of a box standing on a surface with Coulomb friction
 
+`3_legged_table`: Controller design and its implementation on a quasi-static model of a 3-legged table standing on a surface with Coulomb friction
+
 `2D_simple_manipulation`: Controller design and its implementation on a quasi-static model of a box standing on a surface with Coulomb friction manipulated by two robotic arms
 
 `high_dimensional`: Controller design and its implementation on a high dimensional example with 8 states and 10 contacts (four carts example)
