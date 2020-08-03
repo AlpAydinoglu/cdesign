@@ -16,7 +16,7 @@ Submitted to T-RO
 
 arXiv link: Fill
 
-Video: Fill
+Video: https://www.youtube.com/watch?v=l7SyKMCaINg
 
 ## Functionality
 The library can be used to design contact-aware controllers for linear complementarity systems (requires YALMIP and PenBMI). The code can be used to design controllers for any linear complementarity system model and does not require the P-matrix assumption. If F is a P-matrix, pick W=I and design the controller. For the cases where the P-matrix assumption does not hold, we provide an algorithm to find the matrix W and use it in the controller design. If the algorithm fails, pick W=0 and do the controller design.
