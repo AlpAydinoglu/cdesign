@@ -14,7 +14,7 @@ Optimization problems are formulated using https://yalmip.github.io/ (YALMIP).
 # Stabilization of Linear Complementarity Systems via Contact-Aware Controllers
 Submitted to T-RO
 
-arXiv link: Fill
+arXiv link: https://arxiv.org/abs/2008.02104
 
 Video: https://www.youtube.com/watch?v=l7SyKMCaINg
 
