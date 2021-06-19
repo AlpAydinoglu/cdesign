@@ -15,7 +15,7 @@ tspan = [0 4]; %span of a single trajectory
 LW = 4;
 y0(1) = 1;
 y0(2) = -15;
-[t,y] = ode45(@(t,y) sys_affine(t,y,A,B,D,KK,LL,m,Fc,Ec,c,kappa,H,k), tspan, y0);
+[t,y] = ode15s(@(t,y) sys_affine(t,y,A,B,D,KK,LL,m,Fc,Ec,c,kappa,H,k), tspan, y0);
 
 sz = 30;
 figure
@@ -46,16 +46,16 @@ set(gca,'FontSize',sz);
 % xlabel('Time (s)')
 % ylabel('\{x(t)\}_i')
 % 
-% lam_val = [];
-% for i = 1:length(y)
-%     x_val = y(i,1);
-%     tau_val = y(i,2);
-%     lam_val = [lam_val pathlcp(Fc,Ec*x_val+c+H*tau_val)];
-% end
-% 
-% % figure
-% % plot(t, lam_val, 'LineWidth',1)
-% % legend('\gamma', '\lambda_{t}^+', '\lambda_{t}^-')
+lam_val = [];
+for i = 1:length(y)
+    x_val = y(i,1);
+    tau_val = y(i,2);
+    lam_val = [lam_val pathlcp(Fc,Ec*x_val+c+H*tau_val)];
+end
+
+figure
+plot(t, lam_val, 'LineWidth',1)
+legend('\gamma', '\lambda_{t}^+', '\lambda_{t}^-')
 % % figure
 % % plot(t, lam_val(2,:)-lam_val(3,:), 'LineWidth',1)
 % 

@@ -37,7 +37,7 @@ rng(1)
 x_save = [];
 lamh = [];
 %discrete euler (nonlinear)
-    dt = 0.001; %stepsize
+    dt = 0.0001; %stepsize
     t = 2.2; %simulation time
     x = zeros(4,round(t/dt) + 2);
     u = zeros(1,round(t/dt) + 2);
@@ -97,7 +97,7 @@ LL = [0.3859   -0.3852];
 x_save = [];
 lamh = [];
 %discrete euler (nonlinear)
-    dt = 0.001; %stepsize
+    dt = 0.0001; %stepsize
     t = 5; %simulation time
     x = zeros(4,round(t/dt) + 2);
     u = zeros(1,round(t/dt) + 2);

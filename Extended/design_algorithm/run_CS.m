@@ -18,4 +18,4 @@ m = size(D,2); %number of contacts
 
 tspan = []; %span of a single trajectory (tspan has the form [ a b ] where t_0 = a and t_f = b )
 y0 = []; %initial condition
-[t,y] = ode45(@(t,y) sys_affine(t,y,A,B,D,KK,LL,m,Fc,Ec,c,k), tspan, y0); %evaluate the system
+[t,y] = ode15s(@(t,y) sys_affine(t,y,A,B,D,KK,LL,m,Fc,Ec,c,k), tspan, y0); %evaluate the system

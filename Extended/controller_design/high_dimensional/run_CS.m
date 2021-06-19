@@ -12,7 +12,7 @@ m = size(D,2); %number of contacts
 
 tspan = [0 3]; %span of a single trajectory
 y0 = [ -0.0932   -0.2165    0.1105    0.1958    0.0242    0.1078    0.0128   -0.1052];
-[t,y] = ode45(@(t,y) sys_affine(t,y,A,B,D,KK,LL,m,Fc,Ec,c,k), tspan, y0);
+[t,y] = ode15s(@(t,y) sys_affine(t,y,A,B,D,KK,LL,m,Fc,Ec,c,k), tspan, y0);
 u = zeros(6, length(y) );
 lambda = zeros(10, length(y) );
 for i=1:length(y)

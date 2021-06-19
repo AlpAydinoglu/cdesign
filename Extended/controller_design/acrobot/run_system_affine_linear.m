@@ -22,7 +22,7 @@ for i = 1:num_trials
 y0 = range*(0.5-rand(1,n));
 y0(3)=0;
 y0(4)=0;
-[t,y] = ode45(@(t,y) sys_affine(t,y,A,B,D,KK,LL,Fc,Ec,w), tspan, y0);
+[t,y] = ode15s(@(t,y) sys_affine(t,y,A,B,D,KK,LL,Fc,Ec,w), tspan, y0);
 hold on
 plot(t,y,'Color',[0.5,0.5,0.5],'LineWidth',0.5)
 end

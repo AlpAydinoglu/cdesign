@@ -23,7 +23,7 @@ JJ{1} = zeros(k,n); JJ{2} = zeros(k,n); JJ{3} = zeros(k,n);
 
 for i = 1:num_trials
 y0 = range*(0.5-rand(1,n));
-[time{i},y{i}] = ode45(@(t,y) sys_affine(t,y,A,B,D,KK,LL,G,JJ,m,Fc,Ec,w), tspan, y0);
+[time{i},y{i}] = ode15s(@(t,y) sys_affine(t,y,A,B,D,KK,LL,G,JJ,m,Fc,Ec,w), tspan, y0);
 end
 
 %plot the envelope

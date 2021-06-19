@@ -10,7 +10,9 @@ addpath 'C:\Program Files\Mosek\9.2\toolbox\R2015a'
 l = 1; %dimension of rectangular matrix l x m
 
 %complementarity constraints
-Fc = [0 -1 -1; 1 1 -1; 1 -1 1]; 
+Fc = [0 -1 -1; 1 1 -1; 1 -1 1];  %box with friction
+%Fc = [0 -1 -1 0.1 0.5 1; 1 1 -1 0 0 0; 1 -1 1 0 0 0; 0 0 0 1 1 1; 0 0 0 1 1 1; 0 0 0 1 1 1]; %three legged table
+%Fc = [1 1 1; 1 1 1; 1 1 1]; %smaller sized three legged table
 
 %extract dimension information
 m = size(Fc,2); %number of contacts

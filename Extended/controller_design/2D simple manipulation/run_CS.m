@@ -15,7 +15,7 @@ tspan = [0 5]; %span of a single trajectory
 y0(1) = 5; y0(2) = 0; y0(3) = 10; 
 tau_zero = KK*[y0(1);y0(2);y0(3)] + LL*pathlcp(Fc,Ec*[y0(1);y0(2);y0(3)]+c);
 y0(4) = tau_zero(1); y0(5) = tau_zero(2);
-[t,y] = ode45(@(t,y) sys_affine(t,y,A,B,D,KK,LL,m,Fc,Ec,c,kappa,H,k), tspan, y0);
+[t,y] = ode15s(@(t,y) sys_affine(t,y,A,B,D,KK,LL,m,Fc,Ec,c,kappa,H,k), tspan, y0);
 LW = 4;
 sz = 30;
 figure
@@ -56,13 +56,13 @@ xlim([0 5])
 % % plot(t,y(:,4:5),'LineWidth',2)
 % 
 % 
-% % lam_val = [];
-% % for i = 1:length(y)
-% %     x_val = y(i,1:end-k);
-% %     tau_val = y(i,end-k+1:end);
-% %     lam_val = [lam_val pathlcp(Fc,Ec*x_val'+c+H*tau_val')];
-% % end
-% % 
-% % figure
-% % plot(t, lam_val(3:5,:), 'LineWidth',1)
-% % legend('\gamma', '\lambda_{t}^+', '\lambda_{t}^-')
+lam_val = [];
+for i = 1:length(y)
+    x_val = y(i,1:end-k);
+    tau_val = y(i,end-k+1:end);
+    lam_val = [lam_val pathlcp(Fc,Ec*x_val'+c+H*tau_val')];
+end
+
+figure
+plot(t, lam_val(3:5,:), 'LineWidth',1)
+legend('\gamma', '\lambda_{t}^+', '\lambda_{t}^-')

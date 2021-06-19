@@ -48,7 +48,7 @@ counter2 = 0;
 for k = 1:number_of_trials
     k %shows the current trial
     flag = 0; %1 if contact force exceeds a certain value
-    dt = 0.01; %stepsize
+    dt = 0.0001; %stepsize
     t = 6; %simulation time
     x = zeros(4,t/dt + 2); %holds state values
     %initial conditions

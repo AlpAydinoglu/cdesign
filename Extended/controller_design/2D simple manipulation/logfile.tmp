@@ -11,7 +11,7 @@ Preprocessed size   : 3
 
 INITIAL POINT STATISTICS
 Maximum of X. . . . . . . . . .  0.0000e+000 var: (x[    3])
-Maximum of F. . . . . . . . . .  9.8846e-001 eqn: (f[    4])
+Maximum of F. . . . . . . . . .  1.8552e+000 eqn: (f[    4])
 Maximum of Grad F . . . . . . .  1.0000e+000 eqn: (f[    4])
                                             var: (x[    3])
 
@@ -23,8 +23,8 @@ Minimum Column Norm . . . . . .  2.0000e+000 var: (x[    3])
 
 Crash Log
 major  func  diff  size  residual    step       prox   (label)
-    0     0             1.9769e+000             0.0e+000 (f[    4])
-    1     1     2     1 1.4924e-002  1.0e+000    0.0e+000 (f[    3])
+    0     0             3.7104e+000             0.0e+000 (f[    4])
+    1     1     2     1 1.7484e+000  1.0e+000    0.0e+000 (f[    3])
     2     2     1     2 0.0000e+000  1.0e+000    0.0e+000 (f[    3])
 
 Major Iteration Log
@@ -41,7 +41,7 @@ Two-Norm of Grad Fischer Fcn. .  0.0000e+000
 
 FINAL POINT STATISTICS
 Maximum of X. . . . . . . . . .  9.8100e-001 var: (x[    4])
-Maximum of F. . . . . . . . . .  1.4924e-002 eqn: (f[    5])
+Maximum of F. . . . . . . . . .  1.7484e+000 eqn: (f[    5])
 Maximum of Grad F . . . . . . .  1.0000e+000 eqn: (f[    4])
                                             var: (x[    3])
 

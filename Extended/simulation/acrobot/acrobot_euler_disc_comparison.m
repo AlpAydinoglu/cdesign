@@ -1,7 +1,7 @@
 clear all
 clc
 
-nonlinear_controller = 1; %1 to use tactile controller, 0 to use LQR
+nonlinear_controller = 0; %1 to use tactile controller, 0 to use LQR
 nonlinear = 1; %1 to evaluate on nonlinear dynamics
 
 %parameters
@@ -50,7 +50,7 @@ if nonlinear == 1
 for k = 1:number_of_trials
     k %to see the progress
     flag2 = 0; %is 1 if \lambda exceeds a certain value
-    dt = 0.001; %stepsize
+    dt = 0.0001; %stepsize
     t = 5; %simulation time
     x = zeros(4,t/dt + 2); %x values
     x(1,1) = 0*(rand(1)-0.5); x(2,1) = 0*(rand(1)-0.5); x(3,1) = 0.1*(rand(1)-0.5); x(4,1) = 0.1*(rand(1)-0.5);

@@ -24,8 +24,8 @@ tspan2 = [0 10];
 for i = 1:1
 y0 = range*(0.5-rand(1,n));
 y0(4) = 0;
-[t1,y1] = ode45(@(t,y) sys_general(t,y,A,B,D,KK,LL,Fc,Ec), tspan, y0);
-[t2,y2] = ode45(@(t,y) sys_general(t,y,A,B,D,KK,LL,Fc,Ec), tspan2, y0);
+[t1,y1] = ode15s(@(t,y) sys_general(t,y,A,B,D,KK,LL,Fc,Ec), tspan, y0);
+[t2,y2] = ode15s(@(t,y) sys_general(t,y,A,B,D,KK,LL,Fc,Ec), tspan2, y0);
 end
 
 %get the \lambda and u values
