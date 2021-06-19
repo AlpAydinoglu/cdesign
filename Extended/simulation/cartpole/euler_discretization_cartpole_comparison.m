@@ -42,17 +42,17 @@ rng(0)
 x_save = [];
 lamh = [];
 %discrete euler
-number_of_trials = 1; %number of initial conditions
+number_of_trials = 100; %number of initial conditions
 counter = 0; %counts number of times the system is unstable
 counter2 = 0;
 for k = 1:number_of_trials
     k %shows the current trial
     flag = 0; %1 if contact force exceeds a certain value
-    dt = 0.01; %stepsize
-    t = 6; %simulation time
+    dt = 0.0001; %stepsize
+    t = 10; %simulation time
     x = zeros(4,t/dt + 2); %holds state values
     %initial conditions
-    x(1,1) = 0.2*(rand(1)-0.5); x(2,1) = 0+pi; x(3,1) = 2*(rand(1)-0.5); x(4,1) = 2*(rand(1)-0.5);
+    x(1,1) = 0.2*(rand(1)-0.5); x(2,1) = 0+pi; x(3,1) = 8*(rand(1)-0.5); x(4,1) = 2*(rand(1)-0.5);
     %Run the simulaton
     for i = 1:(t/dt)+1
         %x1,x2,x3,x4 (\bar{x2} = x2 - pi)
@@ -67,7 +67,7 @@ for k = 1:number_of_trials
         
         %calculate the contact force lambda
         lambda = pathlcp(Fc,[phi1;phi2]);
-        lamh = [lamh lambda];
+        %lamh = [lamh lambda];
         
         %break if contact force exceeds 10^7
         if max(lambda) >= 10^7
@@ -82,7 +82,11 @@ for k = 1:number_of_trials
         M = [mc+mp mp*len*cos(x2); mp*len*cos(x2) mp*(len^2)];
         C = [0 -mp*len*x4*sin(x2); 0 0];
         G = [0; mp*g*len*sin(x2)]; Bb =[1;0];
-        J = [-sin(alpha) sin(alpha); len*sin(alpha)-len*cos(alpha)*x2 -len*sin(alpha)-len*cos(alpha)*x2];
+        %J = [-sin(alpha) sin(alpha); len*sin(alpha)-len*cos(alpha)*x2 -len*sin(alpha)-len*cos(alpha)*x2];
+        x2 = x2 - pi;
+        J = [-1 1; len*cos(x2) -len*cos(x2)];
+        x2 = x2 + pi;
+        %J = [-1 1; len -len];
         Minv = inv(M); B = [zeros(2,1); Minv*Bb];
         
         %Iterate the autonomous part of the dynamics
@@ -96,7 +100,7 @@ for k = 1:number_of_trials
     end
     
     %CHECK STABILITY
-    %x(:,end) = x(:,end) - [0; pi; 0;0]; %DEGISTIRDIM
+    x(:,end) = x(:,end) - [0; pi; 0;0];
     %check if it is unstable
     if max( abs(  x(:,end) ) ) >= 0.01
         counter2 = counter2 + 1;
@@ -110,13 +114,13 @@ for k = 1:number_of_trials
     end
     
     x_save = [x_save x(:,end)];
-    %counter2
+    counter2
 end
 
 xh = x(1:4,1:end-1);
 
 %FAILURE CASES
-%Tactile Feedback Fail: 0
-%LQR Fail: 29
+%Tactile Feedback Fail: 13
+%LQR Fail: 69
 
 save('data.mat','lamh','xh')
