@@ -1,4 +1,4 @@
-Here, you can find the code for the conference paper 'Contact-Aware Controller design for Coplementarity Systems' that was presented in ICRA2020 and also the code for the extended version of the paper that was recently submitted to T-RO.
+Here, you can find the code for the conference paper 'Contact-Aware Controller design for Coplementarity Systems' that was presented in ICRA2020 and also the code for the extended version of the paper that is published to T-RO.
 
 # Dependencies
 
@@ -12,7 +12,7 @@ Optimization problems are formulated using https://yalmip.github.io/ (YALMIP).
 
 # Extended Version
 # Stabilization of Linear Complementarity Systems via Contact-Aware Controllers
-Submitted to T-RO
+Published in T-RO
 
 arXiv link: https://arxiv.org/abs/2008.02104
 
