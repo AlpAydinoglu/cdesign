@@ -1,4 +1,4 @@
-%This code is for systems with c >= 0, and a = 0 (hence we take z = 0). If
+%This code is for systems with c >= 0, and a = 0 (we take z = 0, p = 0, r = 0). If
 %one has a system with c < 0 or a \neq 0, add an upperbound on the Lyapunov
 %function V similar to ineq1. Feel free to reach out to me if there are
 %problems ( alpayd@seas.upenn.edu ).
@@ -77,17 +77,15 @@ L = sdpvar(k,m,'full');
 %Lyap Function
 %Define the variables
 P1 = sdpvar(n,n); P2 = sdpvar(n,p); P3 = sdpvar(p,p);
-p1 = sdpvar(1,n); p2 = sdpvar(1,m);
 %Construct the Lyapunov function
 V = x_basis' * P1 * x_basis + 2 * x_basis' * P2 * W * lam_basis ...
-    + lam_basis' * W' * P3 * W * lam_basis + p1 * x_basis + p2 * lam_basis;
+    + lam_basis' * W' * P3 * W * lam_basis;
 %Define the derivative vectors
 u = K*x_basis + L*lam_basis; 
 xdot = A*x_basis + B*u + D*lam_basis;
 %Define the derivative of the Lyapunov function
 Vdot = 2 * x_basis' * P1 * xdot + 2* x_basis' * P2 * W * lamd_basis ...
-    + 2 * lam_basis' * W' * P2' * xdot + 2 * lam_basis' * W' * P3 * W * lamd_basis ...
-    + p1 * xdot + p2 * lamd_basis;
+    + 2 * lam_basis' * W' * P2' * xdot + 2 * lam_basis' * W' * P3 * W * lamd_basis;
 
 %initalize the constraint set
 F = [];
